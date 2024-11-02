@@ -1,0 +1,13 @@
+<div class="input-fields-container">
+    <h2>{{ metadados?.descricao }}</h2>
+    <form #formRef="ngForm" (ngSubmit)="submitData()">
+        <div *ngFor="let campo of campos" class="form-group">
+            <label [for]="campo.nome">{{ campo.nome }}</label>
+            <input [type]="campo.tipo" [id]="campo.nome" [(ngModel)]="formData[campo.nome]" [name]="campo.nome"
+                [required]="campo.obrigatorio" class="form-control" placeholder="Digite {{ campo.nome }}" />
+        </div>
+        <button type="submit" [disabled]="!formRef.valid" class="btn btn-primary">
+            Enviar
+        </button>
+    </form>
+</div>

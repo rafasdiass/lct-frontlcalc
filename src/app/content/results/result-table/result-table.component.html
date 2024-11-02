@@ -1,0 +1,13 @@
+<table *ngIf="hasTableData()" class="result-table">
+    <thead>
+        <tr>
+            <th *ngFor="let column of columns">{{ column }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let row of tableData">
+            <td *ngFor="let column of columns">{{ row[column] }}</td>
+        </tr>
+    </tbody>
+</table>
+<p *ngIf="!hasTableData()">Nenhum dado disponível para exibir na tabela.</p>

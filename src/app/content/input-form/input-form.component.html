@@ -1,0 +1,4 @@
+<div class="form-container">
+    <app-input-fields (dataSubmitted)="onFormDataReceived($event)"></app-input-fields>
+    <app-submit-button [isDisabled]="isSubmitting" (buttonClicked)="onButtonClicked()"></app-submit-button>
+</div>
