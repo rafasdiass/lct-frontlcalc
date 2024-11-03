@@ -1,42 +1,87 @@
+$primary-bg: #2c2c2c; // Cor de fundo marrom escuro
+$primary-text: #e0d5c2; // Cor do texto bege claro
+$hover-bg: #d4a373; // Cor marrom claro para hover
+$hover-text: #2c2c2c; // Cor do texto escuro para contraste
+$box-shadow-color: rgba(0, 0, 0, 0.5); // Cor da sombra
+
 .sidebar-container {
-    background-color: #2c2c2c; // Cor marrom escuro/preto para contraste
-    color: #e0d5c2; // Cor bege clara para texto
+    background-color: $primary-bg;
+    color: $primary-text;
+    height: 100%; // Ajuste para que a sidebar ocupe o espaço máximo permitido
+    max-height: calc(100vh - 60px); // Garante que a sidebar respeite a altura do footer (60px = altura do footer)
     width: 250px;
-    height: 100vh; // Ocupa toda a altura da tela
-    position: fixed;
+    padding: 20px;
+    box-shadow: 2px 0 10px $box-shadow-color; // Sombra para destacar a sidebar
+    position: fixed; // Fixa a barra na esquerda da tela
     top: 0;
     left: 0;
-    padding: 20px;
-    overflow-y: auto;
+    z-index: 1000; // Garantir que esteja sobre outros elementos
+    overflow-y: auto; // Adicionar rolagem se o conteúdo for maior que a altura disponível
 
-    ul {
-        list-style: none;
-        padding: 0;
+    .nav-item {
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+    }
 
-        li {
-            margin: 15px 0;
+    .nav-link {
+        color: $primary-text;
+        font-size: 16px;
+        padding: 12px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        background: transparent;
 
-            a {
-                color: #f5f5f5; // Branco claro para links
-                text-decoration: none;
-                font-size: 16px;
+        i {
+            margin-right: 10px;
+            font-size: 18px; // Tamanho do ícone
+        }
 
-                &:hover {
-                    color: #d4a373; // Destaque marrom claro
-                    text-decoration: underline;
-                }
-            }
+        &:hover {
+            background-color: $hover-bg;
+            color: $hover-text;
+            box-shadow: 0 4px 8px $box-shadow-color; // Sombra ao passar o mouse
         }
     }
 
-    // Responsividade
-    @media (max-width: 768px) {
+    .nav-link.active {
+        background-color: $hover-bg;
+        color: $hover-text;
+        box-shadow: 0 4px 8px $box-shadow-color;
+    }
+}
+
+// Responsividade - Mobile First
+@media (max-width: 768px) {
+    .sidebar-container {
         width: 200px;
-        font-size: 14px;
+        padding: 15px;
     }
 
-    @media (max-width: 480px) {
+    .nav-link {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    i {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar-container {
         width: 150px;
+        padding: 10px;
+    }
+
+    .nav-link {
         font-size: 12px;
+        padding: 8px;
+    }
+
+    i {
+        font-size: 14px;
     }
 }

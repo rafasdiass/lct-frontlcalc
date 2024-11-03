@@ -1,37 +1,69 @@
 .footer-container {
-    background-color: #2c2c2c; // Cor marrom escuro/preto para o fundo
-    color: #e0d5c2; // Cor bege clara para o texto
-    padding: 20px;
-    text-align: center;
-    font-size: 14px;
-    line-height: 1.5;
-    width: 100%; // Garante que o footer ocupe toda a largura da tela
-    position: fixed; // Fixa o footer na parte inferior
-    bottom: 0; // Posiciona o footer no fundo da página
-    left: 0; // Alinha o footer à esquerda da tela
+    background-color: #2c2c2c; // Fundo marrom escuro
+    color: #e0d5c2; // Texto bege claro
+    padding: 20px 30px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999; // Para estar acima de outros elementos
+    box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.5); // Sombra destacada
+    border-top: 3px solid #d4a373; // Detalhe de borda superior
 
-    p {
-        margin: 5px 0;
+    .footer-content {
+        text-align: center;
+        width: 100%;
+
+        p {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 300;
+        }
     }
 
-    // Acessibilidade
-    a {
-        color: #f5f5f5; // Cor branca clara para links
-        text-decoration: underline;
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
 
-        &:hover {
-            color: #d4a373; // Cor marrom claro para destaque
+        a {
+            color: #e0d5c2; // Cor dos ícones
+            margin: 0 10px;
+            font-size: 24px;
+            transition: color 0.3s, transform 0.2s;
+
+            &:hover {
+                color: #d4a373; // Cor de destaque ao passar o mouse
+                transform: scale(1.1);
+                text-shadow: 0 0 8px rgba(212, 163, 115, 0.6); // Sombra para hover
+            }
         }
     }
 
     // Responsividade
     @media (max-width: 768px) {
-        font-size: 12px;
-        padding: 15px;
+        padding: 15px 20px;
+
+        .footer-content p {
+            font-size: 13px;
+        }
+
+        .social-icons a {
+            font-size: 20px;
+            margin: 0 8px;
+        }
     }
 
     @media (max-width: 480px) {
-        font-size: 10px;
-        padding: 10px;
+        padding: 10px 15px;
+
+        .footer-content p {
+            font-size: 12px;
+        }
+
+        .social-icons a {
+            font-size: 18px;
+            margin: 0 6px;
+        }
     }
 }

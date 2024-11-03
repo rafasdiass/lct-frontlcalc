@@ -1,13 +1,30 @@
+// Definição de cores primárias da LACET (tons usados em outros projetos)
+$primary: #5a3e2b; // Exemplo de cor marrom
+$hover-primary: #4a3323; // Exemplo de cor para o estado de hover
+
 .submit-button {
-    background-color: #007bff;
+    background-color: $primary;
     color: #fff;
-    border: none;
+    font-size: 16px;
     padding: 10px 20px;
+    border: none;
     border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
 
     &:hover {
-        background-color: #0056b3;
+        background-color: $hover-primary;
+        transform: scale(1.02);
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+
+    i {
+        margin-right: 5px;
     }
 }

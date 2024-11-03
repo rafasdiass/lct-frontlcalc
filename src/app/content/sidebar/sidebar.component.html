@@ -1,7 +1,12 @@
 <nav class="sidebar-container">
-    <ul>
-        <li *ngFor="let item of navItems">
-            <a [routerLink]="item.route">{{ item.label }}</a>
+    <ul class="nav flex-column">
+        <li *ngFor="let item of navItems" class="nav-item">
+            <a [routerLink]="item.route" class="nav-link">
+                <i class="bi bi-house-door-fill" *ngIf="item.id === 'home'"></i>
+                <i class="bi bi-calculator-fill" *ngIf="item.id === 'input-form'"></i>
+                <i class="bi bi-clock-history" *ngIf="item.id === 'history'"></i>
+                {{ item.label }}
+            </a>
         </li>
     </ul>
 </nav>
