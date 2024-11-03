@@ -1,0 +1,13 @@
+<div class="select-sub-type" *ngIf="subTypes.length > 0">
+    <label for="subType">Selecione o subtipo:</label>
+    <select id="subType" (change)="onSubTypeSelect($event)">
+        <option value="" disabled selected>Escolha um subtipo...</option>
+        <option *ngFor="let subType of subTypes" [value]="subType">
+            {{ subType }}
+        </option>
+    </select>
+</div>
+
+<div *ngIf="subTypes.length === 0" class="no-subtypes-message">
+    <p>Nenhum subtipo disponível para o tipo selecionado.</p>
+</div>

@@ -1,6 +1,16 @@
-<div class="results-container" *ngIf="hasResults()">
-    <h2>{{ title }}</h2>
-    <p>{{ summary }}</p>
-    <app-graph-display></app-graph-display>
-    <app-result-table></app-result-table>
+<div class="results-container">
+    <h2 class="results-title">{{ title }}</h2>
+    <p class="results-summary">{{ summary }}</p>
+
+    <div *ngIf="tableData.length > 0" class="results-table">
+        <app-result-table [tableData]="tableData" [columns]="columns"></app-result-table>
+    </div>
+
+    <div *ngIf="graphData.length > 0" class="results-graph">
+        <app-graph-display [graphData]="graphData"></app-graph-display>
+    </div>
+
+    <div *ngIf="!tableData.length && !graphData.length" class="results-empty">
+        <p>Nenhum dado disponível para exibição.</p>
+    </div>
 </div>

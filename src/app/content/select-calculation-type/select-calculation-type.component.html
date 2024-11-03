@@ -1,0 +1,9 @@
+<div class="select-calculation-type">
+    <label for="calculationType">Selecione o tipo de cálculo:</label>
+    <select id="calculationType" (change)="onSelectType($event)">
+        <option value="" disabled selected>Escolha um tipo...</option>
+        <option *ngFor="let type of calculationTypes" [value]="type.id">
+            {{ type.displayName }}
+        </option>
+    </select>
+</div>

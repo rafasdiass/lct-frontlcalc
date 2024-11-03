@@ -1,78 +1,102 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ApiService } from '../../../shared/api.service';
-import { CalculationData } from '../../../shared/models/calculation-data.model';
-import { Observable } from 'rxjs';
-
-interface Campo {
-  nome: string;
-  obrigatorio: boolean;
-  tipo: string;
-}
-
-interface Metadados {
-  descricao: string;
-  [key: string]: any;
-}
 
 @Component({
   selector: 'app-input-fields',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
   templateUrl: './input-fields.component.html',
   styleUrls: ['./input-fields.component.scss'],
+  standalone: true,
+  imports: [FormsModule, CommonModule],
 })
-export class InputFieldsComponent implements OnInit {
-  @Input() tipoPeca: string = '';
-  campos: Campo[] = [];
-  metadados: Metadados | null = null;
-  formData: { [key: string]: any } = {};
+export class InputFieldsComponent implements OnChanges {
+  @Input() selectedType: string | null = null;
+  @Input() selectedSubType: string | null = null;
+  @Output() fieldValuesChanged = new EventEmitter<{
+    [key: string]: string | number;
+  }>();
 
-  @Output() dataSubmitted: EventEmitter<CalculationData> =
-    new EventEmitter<CalculationData>();
+  fields: string[] = [];
+  fieldValues: { [key: string]: string | number } = {};
 
-  constructor(private apiService: ApiService) {}
-
-  ngOnInit(): void {
-    if (this.tipoPeca) {
-      this.apiService.getEstruturaCompleta().subscribe({
-        next: (res: {
-          [key: string]: { campos: Campo[]; metadados: Metadados };
-        }) => {
-          if (res[this.tipoPeca]) {
-            this.campos = res[this.tipoPeca].campos;
-            this.metadados = res[this.tipoPeca].metadados;
-            this.inicializarFormData();
-          } else {
-            console.error(`Tipo de peça ${this.tipoPeca} não encontrado.`);
-          }
-        },
-        error: (err: any) =>
-          console.error('Erro ao buscar a estrutura dos campos:', err),
-      });
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selectedType'] || changes['selectedSubType']) {
+      this.fields = this.getFields();
+      this.initializeFieldValues();
     }
   }
 
-  inicializarFormData(): void {
-    this.campos.forEach((campo: Campo) => {
-      this.formData[campo.nome] = campo.obrigatorio ? '' : null;
-    });
-  }
-
-  submitData(): void {
-    if (this.validarCampos()) {
-      this.dataSubmitted.emit(this.formData as CalculationData);
+  getFields(): string[] {
+    if (this.selectedType === 'fundacao') {
+      switch (this.selectedSubType) {
+        case 'Barrete':
+          return ['Profundidade', 'Largura', 'Carga Máxima', 'Tipo de Solo'];
+        case 'Bloco':
+          return ['Dimensões', 'Carga Máxima', 'Material'];
+        case 'Estaca':
+          return ['Comprimento', 'Diâmetro', 'Tipo de Solo'];
+        case 'Estaca Hélice Contínua':
+          return ['Comprimento', 'Diâmetro', 'Material', 'Tipo de Solo'];
+        case 'Radier':
+          return ['Área', 'Espessura', 'Carga Máxima'];
+        case 'Sapata Corrida':
+          return ['Comprimento', 'Largura', 'Carga'];
+        case 'Sapata Rígida':
+          return ['Altura', 'Largura', 'Carga Máxima'];
+        case 'Tubulão Ar Comprimido':
+          return ['Profundidade', 'Pressão Máxima', 'Tipo de Solo'];
+        case 'Tubulão Céu Aberto':
+          return ['Profundidade', 'Largura', 'Material'];
+        case 'Tubulão':
+          return ['Profundidade', 'Diâmetro', 'Tipo de Solo'];
+        default:
+          return ['Profundidade', 'Largura', 'Altura', 'Carga'];
+      }
+    } else if (this.selectedType === 'estrutura') {
+      switch (this.selectedSubType) {
+        case 'Pilar':
+          return ['Largura', 'Altura', 'Carga'];
+        case 'Viga':
+          return ['Comprimento', 'Largura', 'Altura', 'Carga'];
+        case 'Laje':
+          return ['Área', 'Espessura', 'Carga'];
+        case 'Arco':
+          return ['Raio', 'Largura', 'Altura', 'Carga'];
+        case 'Treliça':
+          return ['Número de Nós', 'Número de Barras', 'Cargas', 'Restrições'];
+        case 'Viga Contínua':
+          return ['Comprimento Total', 'Seções', 'Carga'];
+        case 'Flecha':
+          return ['Comprimento', 'Carga', 'Material'];
+        case 'Detalhamento':
+          return ['Tipo de Detalhe', 'Dimensões', 'Carga'];
+        default:
+          return [];
+      }
     } else {
-      console.error('Todos os campos obrigatórios devem ser preenchidos.');
+      return [];
     }
   }
 
-  private validarCampos(): boolean {
-    return this.campos.every(
-      (campo: Campo) =>
-        !campo.obrigatorio ||
-        this.formData[campo.nome]?.toString().trim() !== ''
-    );
+  onFieldChange(fieldName: string, event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target && target.value !== null) {
+      this.fieldValues[fieldName] = target.value;
+      this.fieldValuesChanged.emit(this.fieldValues);
+    }
+  }
+
+  private initializeFieldValues(): void {
+    this.fieldValues = {};
+    this.fields.forEach((field) => {
+      this.fieldValues[field] = '';
+    });
   }
 }

@@ -1,52 +1,31 @@
-Aqui está o conjunto completo de comandos para criar todos os componentes e serviços do projeto Angular 18, mantendo a estrutura de responsabilidade única, com componentes pais e filhos conforme discutido. Tudo será gerado em um único prompt de comando para facilitar o processo.
+Aqui está a versão atualizada do README com a estrutura correta da árvore de pastas, o novo wireframe em texto e o resultado final após o merge.
 
-### Comandos para Criar o Projeto Angular e Estruturar Componentes
+```markdown
+# LCT Calculator - Projeto Angular
 
-```bash
-# Criação do projeto Angular
-ng new lct-calculator --routing --style=css
-cd lct-calculator
+## Visão Geral
+O LCT Calculator é um projeto Angular desenvolvido para fornecer uma interface intuitiva para realizar cálculos estruturais e apresentar os resultados processados pelo backend.
 
-# Criação dos componentes principais na pasta 'content'
-
-# Componente HomeComponent (pai)
-ng generate component content/home
-
-# Componente InputFormComponent (pai)
-ng generate component content/input-form
-
-# Componentes filhos de InputFormComponent
-ng generate component content/input-form/input-fields
-ng generate component content/input-form/submit-button
-
-# Componente ResultsComponent (pai)
-ng generate component content/results
-
-# Componentes filhos de ResultsComponent
-ng generate component content/results/result-table
-ng generate component content/results/graph-display
-
-# Componente FeedbackComponent (filho de HomeComponent)
-ng generate component content/feedback
-
-# Criação dos serviços e modelos na pasta 'shared'
-
-# ApiService para comunicação com o backend
-ng generate service shared/api
-
-# NotificationService para mensagens de feedback
-ng generate service shared/notification
-
-# Criação de modelos de dados (interfaces)
-touch src/app/shared/models/calc-data.model.ts
-touch src/app/shared/models/result-data.model.ts
-```
-
-### Estrutura de Pastas Criada
+## Estrutura de Pastas do Projeto
 
 ```
 src/app/
 |-- content/
+|   |-- header/
+|   |   |-- header.component.ts
+|   |   |-- header.component.html
+|   |   |-- header.component.css
+|   |
+|   |-- footer/
+|   |   |-- footer.component.ts
+|   |   |-- footer.component.html
+|   |   |-- footer.component.css
+|   |
+|   |-- sidebar/
+|   |   |-- sidebar.component.ts
+|   |   |-- sidebar.component.html
+|   |   |-- sidebar.component.css
+|   |
 |   |-- home/
 |   |   |-- home.component.ts
 |   |   |-- home.component.html
@@ -79,9 +58,29 @@ src/app/
 |   |       |-- graph-display.component.css
 |   |
 |   |-- feedback/
-|       |-- feedback.component.ts
-|       |-- feedback.component.html
-|       |-- feedback.component.css
+|   |   |-- feedback.component.ts
+|   |   |-- feedback.component.html
+|   |   |-- feedback.component.css
+|   |
+|   |-- select-calculation-type/
+|   |   |-- select-calculation-type.component.ts
+|   |   |-- select-calculation-type.component.html
+|   |   |-- select-calculation-type.component.css
+|   |
+|   |-- loading-indicator/
+|   |   |-- loading-indicator.component.ts
+|   |   |-- loading-indicator.component.html
+|   |   |-- loading-indicator.component.css
+|   |
+|   |-- error-notification/
+|   |   |-- error-notification.component.ts
+|   |   |-- error-notification.component.html
+|   |   |-- error-notification.component.css
+|   |
+|   |-- history/
+|       |-- history.component.ts
+|       |-- history.component.html
+|       |-- history.component.css
 |
 |-- shared/
 |   |-- api.service.ts
@@ -91,36 +90,152 @@ src/app/
 |       |-- result-data.model.ts
 ```
 
-### Descrição das Responsabilidades dos Componentes
+## Wireframe de Texto do Front-End
 
-1. **HomeComponent**
-   - **Descrição**: Componente principal que organiza a navegação e a apresentação da interface.
-   - **Elementos filhos**: `FeedbackComponent`.
+```
++-------------------------------------+
+|            HeaderComponent          |
++-------------------------------------+
+| SidebarComponent | MainContent      |
+|                  |                  |
+| +-------------------------------+   |
+| | SelectCalculationTypeComponent|   |
+| +-------------------------------+   |
+| |                               |   |
+| | CalculationFormComponent      |   |
+| | - Tipo de peça                |   |
+| | - Largura (input)             |   |
+| | - Altura (input)              |   |
+| | - Carga (input)               |   |
+| | - Botão Enviar                |   |
+| |                               |   |
+| +-------------------------------+   |
+| | LoadingIndicatorComponent     |   |
+| +-------------------------------+   |
+| | ResultDisplayComponent        |   |
+| | - Resultados calculados       |   |
+| |                               |   |
+| +-------------------------------+   |
+| | ErrorNotificationComponent    |   |
+| +-------------------------------+   |
+| | HistoryComponent (Opcional)   |   |
+| +-------------------------------+   |
+|                  |                  |
++-------------------------------------+
+|            FooterComponent          |
++-------------------------------------+
+```
 
-2. **InputFormComponent**
-   - **Descrição**: Componente pai que contém a lógica de entrada de dados.
+## Descrição dos Componentes
+
+### Componentes Principais
+
+1. **`HeaderComponent`**
+   - **Descrição**: Apresenta o título da aplicação e links de navegação.
+
+2. **`SidebarComponent`**
+   - **Descrição**: Opcional, com links para diferentes cálculos e seções da aplicação.
+
+3. **`SelectCalculationTypeComponent`**
+   - **Descrição**: Permite a seleção do tipo de cálculo a ser realizado (ex.: pilar, viga, laje).
+
+4. **`CalculationFormComponent`**
+   - **Descrição**: Captura as entradas do usuário para os cálculos.
    - **Elementos filhos**:
-     - `InputFieldsComponent` – Captura as entradas do usuário.
-     - `SubmitButtonComponent` – Botão para envio do formulário.
+     - `InputFieldsComponent`: Captura os campos específicos de entrada.
+     - `SubmitButtonComponent`: Componente de envio de formulário.
 
-3. **ResultsComponent**
-   - **Descrição**: Componente pai para exibir os resultados dos cálculos.
+5. **`ResultsComponent`**
+   - **Descrição**: Exibe os resultados calculados.
    - **Elementos filhos**:
-     - `ResultTableComponent` – Exibe os resultados em formato de tabela.
-     - `GraphDisplayComponent` – Mostra os resultados em gráficos.
+     - `ResultTableComponent`: Mostra os resultados em formato de tabela.
+     - `GraphDisplayComponent`: Mostra os resultados em gráficos.
 
-4. **FeedbackComponent**
-   - **Descrição**: Exibe mensagens de sucesso ou erro sobre ações realizadas na aplicação.
+6. **`LoadingIndicatorComponent`**
+   - **Descrição**: Exibe uma animação de carregamento durante as operações de backend.
 
-### Serviços e Modelos
+7. **`ErrorNotificationComponent`**
+   - **Descrição**: Mostra mensagens de erro caso ocorram falhas de requisição ou validação.
 
+8. **`HistoryComponent`** (Opcional)
+   - **Descrição**: Exibe o histórico de cálculos realizados pelo usuário.
+
+9. **`FeedbackComponent`**
+   - **Descrição**: Exibe mensagens de feedback de sucesso ou erro.
+
+10. **`FooterComponent`**
+    - **Descrição**: Contém informações adicionais, como links de contato e créditos.
+
+## Serviços e Modelos
+
+### Serviços
 1. **ApiService**
-   - **Função**: Gerencia as chamadas HTTP para o backend.
+   - **Função**: Gerencia as chamadas HTTP ao backend para envio e recebimento de dados.
 2. **NotificationService**
-   - **Função**: Centraliza as notificações de feedback.
-3. **Modelos (`calc-data.model.ts` e `result-data.model.ts`)**
-   - **Função**: Define interfaces de dados para entrada e resultados.
+   - **Função**: Centraliza a exibição de mensagens de feedback para o usuário.
 
-### Conclusão
+### Modelos
+- **`calc-data.model.ts`**: Interface de dados de entrada.
+- **`result-data.model.ts`**: Interface de dados de saída.
 
-Os comandos acima estruturam o projeto Angular com componentes e serviços organizados, seguindo as melhores práticas de responsabilidade única e modularidade.
+## Instalação e Configuração
+
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/seu-usuario/lct-calculator.git
+   cd lct-calculator
+   ```
+
+2. **Instale as dependências:**
+   ```bash
+   npm install
+   ```
+
+3. **Inicie o servidor de desenvolvimento:**
+   ```bash
+   ng serve
+   ```
+
+4. **Verifique se o backend está configurado e em execução para prover os cálculos necessários.**
+
+## Contribuições
+Contribuições são bem-vindas! Envie pull requests ou relate problemas no repositório.
+
+## Licença
+Este projeto é licenciado sob a [LICENÇA QUE VOCÊ ESCOLHER].
+
+```
+
+Este README atualizado inclui a descrição dos componentes, a estrutura da árvore de pastas correta, e o wireframe em texto para visualização da interface do usuário.
+
++-------------------------------------+
+|            HeaderComponent          |
++-------------------------------------+
+| SidebarComponent | MainContent      |
+|                  |                   |
+| +-------------------------------+   |
+| | SelectCalculationTypeComponent|   |
+| +-------------------------------+   |
+| |                               |   |
+| | CalculationFormComponent      |   |
+| | - Tipo de peça                |   |
+| | - Largura (input)             |   |
+| | - Altura (input)              |   |
+| | - Carga (input)               |   |
+| | - Botão Enviar                |   |
+| |                               |   |
+| +-------------------------------+   |
+| | LoadingIndicatorComponent     |   |
+| +-------------------------------+   |
+| | ResultDisplayComponent        |   |
+| | - Resultados calculados       |   |
+| |                               |   |
+| +-------------------------------+   |
+| | ErrorNotificationComponent    |   |
+| +-------------------------------+   |
+| | FeedbackComponent             |   |
+| +-------------------------------+   |
+|                  |                   |
++-------------------------------------+
+|            FooterComponent          |
++-------------------------------------+

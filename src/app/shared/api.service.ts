@@ -5,70 +5,87 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { CalculationData } from './models/calculation-data.model';
+import { catchError, tap } from 'rxjs/operators';
+import {
+  CalculationResult,
+  CalculationRequest,
+} from '../shared/models/calculation-data.model'; // Importando as interfaces
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  private readonly baseUrl: string = 'http://localhost:8000/api'; // Substitua pela URL da sua API
+  private readonly baseUrl: string = 'http://localhost:8000/api';
 
   constructor(private http: HttpClient) {}
 
   /**
-   * Envia dados de cálculo para o backend.
-   * @param data Dados do formulário de entrada.
-   * @returns Observable com a resposta do backend.
+   * Obtém a estrutura completa dos dados do backend.
+   * @returns Observable de CalculationResult contendo a estrutura recebida.
    */
-  sendCalculationData<T>(data: T): Observable<any> {
-    const url = `${this.baseUrl}/calculate/`;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-
-    return this.http
-      .post<any>(url, data, { headers })
-      .pipe(catchError(this.handleError));
-  }
-
-  /**
-   * Busca os resultados dos cálculos do backend.
-   * @returns Observable com os resultados dos cálculos.
-   */
-  getCalculationResults(): Observable<any> {
-    const url = `${this.baseUrl}/results/`;
-    return this.http.get<any>(url).pipe(catchError(this.handleError));
-  }
-
-  /**
-   * Obtém a estrutura completa para exibição dos campos de formulário.
-   * @returns Observable com a estrutura dos campos.
-   */
-  getEstruturaCompleta(): Observable<{
-    [key: string]: {
-      campos: { nome: string; obrigatorio: boolean; tipo: string }[];
-      metadados: { descricao: string; [key: string]: any };
-    };
-  }> {
+  getEstruturaCompleta(): Observable<CalculationResult> {
     const url = `${this.baseUrl}/estrutura-completa/`;
-    return this.http
-      .get<{
-        [key: string]: {
-          campos: { nome: string; obrigatorio: boolean; tipo: string }[];
-          metadados: { descricao: string; [key: string]: any };
-        };
-      }>(url)
-      .pipe(catchError(this.handleError));
+    console.log('Solicitando estrutura completa dos campos do backend.');
+
+    return this.http.get<CalculationResult>(url).pipe(
+      tap((response) =>
+        this.logResponse('Estrutura recebida do backend:', response)
+      ),
+      catchError(this.handleError)
+    );
   }
 
   /**
-   * Manipulador de erros para operações HTTP.
-   * @param error O erro recebido da operação HTTP.
-   * @returns Um Observable que lança um erro formatado.
+   * Envia dados de cálculo para o backend e retorna os resultados.
+   * @param data Dados de entrada para o cálculo.
+   * @returns Observable de CalculationResult contendo os resultados dos cálculos.
+   */
+  sendCalculationData(data: CalculationRequest): Observable<CalculationResult> {
+    const url = `${this.baseUrl}/calcular/`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    console.log('Enviando dados para o backend:', data);
+
+    return this.http.post<CalculationResult>(url, data, { headers }).pipe(
+      tap((response) =>
+        this.logResponse('Resposta recebida do backend:', response)
+      ),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Obtém os resultados dos cálculos previamente processados.
+   * @returns Observable de CalculationResult contendo os resultados dos cálculos.
+   */
+  getCalculationResults(): Observable<CalculationResult> {
+    const url = `${this.baseUrl}/resultados/`;
+    console.log('Solicitando resultados de cálculos do backend.');
+
+    return this.http.get<CalculationResult>(url).pipe(
+      tap((response) =>
+        this.logResponse('Resultados de cálculos recebidos:', response)
+      ),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Método de logging para imprimir mensagens e respostas no console.
+   * @param message Mensagem a ser impressa.
+   * @param data Dados relacionados à mensagem.
+   */
+  private logResponse(message: string, data: any): void {
+    console.log(message, data);
+  }
+
+  /**
+   * Manipula erros HTTP e retorna um Observable com o erro formatado.
+   * @param error Objeto de erro HTTP.
+   * @returns Observable que lança um novo erro formatado.
    */
   private handleError(error: HttpErrorResponse): Observable<never> {
-    console.error(`Erro na operação HTTP: ${error.message}`);
+    console.error('Erro na operação HTTP:', error);
     return throwError(
       () => new Error(`Erro na operação HTTP: ${error.message}`)
     );

@@ -1,4 +1,44 @@
-<div class="form-container">
-    <app-input-fields (dataSubmitted)="onFormDataReceived($event)"></app-input-fields>
-    <app-submit-button [isDisabled]="isSubmitting" (buttonClicked)="onButtonClicked()"></app-submit-button>
+<div class="container mt-5 p-4 border rounded shadow-sm bg-light">
+    <h2 class="text-center mb-4">
+        <i class="bi bi-file-earmark-text-fill"></i> Formulário de Entrada
+    </h2>
+
+    <!-- Seletor de tipo de cálculo -->
+    <div class="mb-3">
+        <label for="calculationType" class="form-label">
+            <i class="bi bi-list-ul"></i> Selecione o tipo de cálculo:
+        </label>
+        <app-select-calculation-type (typeSelected)="onTypeSelected($event)"></app-select-calculation-type>
+    </div>
+
+    <!-- Seletor de subtipo -->
+    <div *ngIf="selectedType" class="mb-3">
+        <label for="subType" class="form-label">
+            <i class="bi bi-diagram-3-fill"></i> Selecione o subtipo:
+        </label>
+        <app-select-sub-type [selectedCategory]="selectedType"
+            (subTypeSelected)="onSubTypeSelected($event)"></app-select-sub-type>
+    </div>
+
+    <!-- Campos de entrada -->
+    <div *ngIf="selectedType" class="mb-4">
+        <app-input-fields [selectedType]="selectedType" [selectedSubType]="selectedSubType"
+            (fieldValuesChanged)="onFieldValuesChanged($event)">
+        </app-input-fields>
+    </div>
+
+    <!-- Indicador de carregamento -->
+    <div class="text-center my-3">
+        <app-loading-indicator [isLoading]="isLoading"></app-loading-indicator>
+    </div>
+
+    <!-- Botão de envio -->
+    <div class="d-flex justify-content-center mb-3">
+        <app-submit-button [isLoading]="isLoading" [calculationData]="calculationData" [selectedType]="selectedType"
+            [selectedSubType]="selectedSubType" (feedbackMessage)="onFeedbackReceived($event)">
+        </app-submit-button>
+    </div>
+
+    <!-- Componente de feedback -->
+    <app-feedback *ngIf="feedback" [message]="feedback.message" [type]="feedback.type"></app-feedback>
 </div>
