@@ -5,11 +5,10 @@
             <p class="m-0 small">{{ subtitle }}</p>
         </div>
         <nav class="nav-section">
-           
-            <button class="btn btn-outline-light me-2">
+            <button (click)="navigateTo('report')" class="btn btn-outline-light me-2">
                 <i class="bi bi-download"></i> Exportar Relatório
             </button>
-            <button class="btn btn-outline-light">
+            <button (click)="navigateTo('about')" class="btn btn-outline-light">
                 <i class="bi bi-info-circle"></i> Sobre
             </button>
         </nav>

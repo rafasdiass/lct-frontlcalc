@@ -1,3 +1,5 @@
+// api.service.ts
+
 import { Injectable } from '@angular/core';
 import {
   HttpClient,
@@ -6,10 +8,7 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import {
-  CalculationResult,
-  CalculationRequest,
-} from '../shared/models/calculation-data.model'; // Importando as interfaces
+import { CalculationResult } from '../shared/models/calculation-data.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,11 +24,9 @@ export class ApiService {
    */
   getEstruturaCompleta(): Observable<CalculationResult> {
     const url = `${this.baseUrl}/estrutura-completa/`;
-    console.log('Solicitando estrutura completa dos campos do backend.');
-
     return this.http.get<CalculationResult>(url).pipe(
       tap((response) =>
-        this.logResponse('Estrutura recebida do backend:', response)
+        console.log('Estrutura recebida do backend:', response)
       ),
       catchError(this.handleError)
     );
@@ -40,16 +37,11 @@ export class ApiService {
    * @param data Dados de entrada para o cálculo.
    * @returns Observable de CalculationResult contendo os resultados dos cálculos.
    */
-  sendCalculationData(data: CalculationRequest): Observable<CalculationResult> {
+  sendCalculationData(data: any): Observable<CalculationResult> {
     const url = `${this.baseUrl}/calcular/`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
-    console.log('Enviando dados para o backend:', data);
-
     return this.http.post<CalculationResult>(url, data, { headers }).pipe(
-      tap((response) =>
-        this.logResponse('Resposta recebida do backend:', response)
-      ),
+      tap((response) => console.log('Resposta recebida do backend:', response)),
       catchError(this.handleError)
     );
   }
@@ -60,29 +52,30 @@ export class ApiService {
    */
   getCalculationResults(): Observable<CalculationResult> {
     const url = `${this.baseUrl}/resultados/`;
-    console.log('Solicitando resultados de cálculos do backend.');
-
     return this.http.get<CalculationResult>(url).pipe(
       tap((response) =>
-        this.logResponse('Resultados de cálculos recebidos:', response)
+        console.log('Resultados de cálculos recebidos:', response)
       ),
       catchError(this.handleError)
     );
   }
 
   /**
-   * Método de logging para imprimir mensagens e respostas no console.
-   * @param message Mensagem a ser impressa.
-   * @param data Dados relacionados à mensagem.
+   * Solicita a geração de um relatório PDF do backend.
+   * @returns Observable contendo o Blob do arquivo PDF.
    */
-  private logResponse(message: string, data: any): void {
-    console.log(message, data);
+  getReport(): Observable<Blob> {
+    const url = `${this.baseUrl}/gerar-relatorio/`;
+    return this.http.get(url, { responseType: 'blob' }).pipe(
+      tap(() => console.log('Relatório solicitado com sucesso.')),
+      catchError(this.handleError)
+    );
   }
 
   /**
-   * Manipula erros HTTP e retorna um Observable com o erro formatado.
+   * Método de tratamento de erros HTTP.
    * @param error Objeto de erro HTTP.
-   * @returns Observable que lança um novo erro formatado.
+   * @returns Observable com erro formatado.
    */
   private handleError(error: HttpErrorResponse): Observable<never> {
     console.error('Erro na operação HTTP:', error);

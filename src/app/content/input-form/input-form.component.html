@@ -38,4 +38,7 @@
 
     <!-- Componente de feedback -->
     <app-feedback *ngIf="feedback" [message]="feedback.message" [type]="feedback.type"></app-feedback>
+
+    <!-- Componente de notificação de erro -->
+    <app-error-notification *ngIf="errorMessage" [errorMessage]="errorMessage"></app-error-notification>
 </div>

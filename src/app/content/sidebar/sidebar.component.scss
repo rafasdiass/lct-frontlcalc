@@ -7,16 +7,13 @@ $box-shadow-color: rgba(0, 0, 0, 0.5); // Cor da sombra
 .sidebar-container {
     background-color: $primary-bg;
     color: $primary-text;
-    height: 100%; // Ajuste para que a sidebar ocupe o espaço máximo permitido
-    max-height: calc(100vh - 60px); // Garante que a sidebar respeite a altura do footer (60px = altura do footer)
     width: 250px;
     padding: 20px;
     box-shadow: 2px 0 10px $box-shadow-color; // Sombra para destacar a sidebar
-    position: fixed; // Fixa a barra na esquerda da tela
-    top: 0;
-    left: 0;
-    z-index: 1000; // Garantir que esteja sobre outros elementos
-    overflow-y: auto; // Adicionar rolagem se o conteúdo for maior que a altura disponível
+    position: relative; // Relativo para respeitar a posição no componente pai
+    overflow-y: auto; // Adiciona rolagem se necessário
+    flex-shrink: 0;
+    height: 100%; // Garante que a altura ocupe 100% do container pai (content-wrapper)
 
     .nav-item {
         margin-bottom: 15px;

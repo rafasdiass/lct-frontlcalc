@@ -1,10 +1,16 @@
 <div class="home-container d-flex flex-column">
-  <app-header></app-header> <!-- Adicionado o componente de cabeçalho -->
+  <div class="header-container">
+    <app-header></app-header> <!-- Componente de cabeçalho -->
+  </div>
   <div class="content-wrapper d-flex flex-grow-1">
-    <app-sidebar></app-sidebar>
-    <div class="main-content flex-grow-1 p-4">
-      <router-outlet></router-outlet> <!-- Aqui será carregado o conteúdo das rotas filhas -->
+    <div class="sidebar-container">
+      <app-sidebar></app-sidebar> <!-- Componente de sidebar -->
+    </div>
+    <div class="main-content-container flex-grow-1 p-4">
+      <router-outlet></router-outlet> <!-- Conteúdo principal das rotas -->
     </div>
   </div>
-  <app-footer></app-footer>
+  <div class="footer-container">
+    <app-footer></app-footer> <!-- Componente de rodapé -->
+  </div>
 </div>

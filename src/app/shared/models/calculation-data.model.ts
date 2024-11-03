@@ -9,11 +9,14 @@ export interface CalculationRequest {
 
 // Interface para a estrutura de um resultado de cálculo
 export interface CalculationResult {
-  summary: string; // Resumo do resultado
-  tableData: TableRow[]; // Dados para exibição em tabela
-  columns: string[]; // Colunas para a tabela de resultados
-  graphData: GraphDataPoint[]; // Dados do gráfico
+  summary: string;
+  tableData: Array<{ [key: string]: string | number }>;
+  columns: string[];
+  graphData: Array<{ label: string; value: number }>;
+  Conclusão?: string; // Propriedade opcional adicionada
+  [key: string]: unknown; // Para propriedades dinâmicas
 }
+
 
 // Interface para definir uma linha de dados da tabela
 export interface TableRow {

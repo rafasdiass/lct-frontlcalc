@@ -7,6 +7,7 @@ import { SelectSubTypeComponent } from '../select-sub-type/select-sub-type.compo
 import { LoadingIndicatorComponent } from '../loading-indicator/loading-indicator.component';
 import { FormsModule } from '@angular/forms';
 import { FeedbackComponent } from '../feedback/feedback.component';
+import { ErrorNotificationComponent } from '../error-notification/error-notification.component'; // Importação adicionada
 
 @Component({
   selector: 'app-input-form',
@@ -22,6 +23,7 @@ import { FeedbackComponent } from '../feedback/feedback.component';
     SelectSubTypeComponent,
     LoadingIndicatorComponent,
     FeedbackComponent,
+    ErrorNotificationComponent, // Componente de notificação de erro adicionado
   ],
 })
 export class InputFormComponent {
@@ -31,12 +33,14 @@ export class InputFormComponent {
   calculationData: { [key: string]: string | number } = {};
   feedback: { message: string; type: 'success' | 'error' | 'info' } | null =
     null;
+  errorMessage: string = ''; // Propriedade para a mensagem de erro
 
   onTypeSelected(type: string): void {
     this.selectedType = type;
     this.selectedSubType = null; // Resetar subtipo ao mudar de tipo principal
     console.log(`Tipo de cálculo selecionado: ${type}`);
   }
+
   startLoading() {
     this.isLoading = true;
   }
@@ -44,6 +48,7 @@ export class InputFormComponent {
   stopLoading() {
     this.isLoading = false;
   }
+
   onSubTypeSelected(subType: string): void {
     this.selectedSubType = subType;
     console.log(`Subtipo de cálculo selecionado: ${subType}`);
@@ -59,5 +64,10 @@ export class InputFormComponent {
     type: 'success' | 'error' | 'info';
   }): void {
     this.feedback = feedback;
+  }
+
+  // Método para definir uma mensagem de erro
+  setError(message: string): void {
+    this.errorMessage = message;
   }
 }

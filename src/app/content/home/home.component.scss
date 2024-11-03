@@ -1,24 +1,24 @@
 .home-container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; // Garante que o container principal preencha a altura total da viewport
+    min-height: 100vh; // Garante altura total da viewport
+
+    .header-container {
+        flex-shrink: 0;
+    }
 
     .content-wrapper {
         display: flex;
         flex-grow: 1;
-        overflow: hidden; // Evita que a sidebar e o conteúdo ultrapassem o espaço disponível
+        overflow: hidden; // Evita que o conteúdo exceda o espaço disponível
     }
 
-    app-sidebar {
-        flex-shrink: 0; // Evita que a sidebar seja redimensionada para menos do que o necessário
-    }
-
-    .main-content {
+    .main-content-container {
         flex-grow: 1;
         overflow-y: auto; // Permite rolagem caso o conteúdo exceda a altura disponível
     }
 
-    app-footer {
-        flex-shrink: 0; // O footer permanece fixo no final, não se sobrepõe à sidebar
+    .footer-container {
+        flex-shrink: 0;
     }
 }

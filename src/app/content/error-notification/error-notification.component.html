@@ -1,1 +1,4 @@
-<p>error-notification works!</p>
+<div *ngIf="hasError()" class="alert alert-danger d-flex align-items-center" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    <span>{{ errorMessage }}</span>
+</div>
