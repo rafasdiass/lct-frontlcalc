@@ -13,9 +13,6 @@
 
     <!-- Seletor de subtipo -->
     <div *ngIf="selectedType" class="mb-3">
-        <label for="subType" class="form-label">
-            <i class="bi bi-diagram-3-fill"></i> Selecione o subtipo:
-        </label>
         <app-select-sub-type [selectedCategory]="selectedType"
             (subTypeSelected)="onSubTypeSelected($event)"></app-select-sub-type>
     </div>

@@ -4,11 +4,12 @@ import { ResultsComponent } from "../results/results.component";
 import { FeedbackComponent } from "../feedback/feedback.component";
 import { FooterComponent } from "../footer/footer.component";
 import { SidebarComponent } from "../sidebar/sidebar.component";
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [InputFormComponent, ResultsComponent, FeedbackComponent, FooterComponent, SidebarComponent],
+  imports: [InputFormComponent, ResultsComponent, FeedbackComponent, FooterComponent, SidebarComponent, RouterOutlet],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
