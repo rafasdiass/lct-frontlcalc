@@ -1,16 +1,18 @@
-<div class="results-container">
-    <h2 class="results-title">{{ title }}</h2>
-    <p class="results-summary">{{ summary }}</p>
+<div class="results-container container mt-4">
+    <h2 class="results-title text-center mb-3">
+        <i class="bi bi-bar-chart-fill me-2"></i>{{ title }}
+    </h2>
+    <p class="results-summary text-muted text-center">{{ summary }}</p>
 
-    <div *ngIf="tableData.length > 0" class="results-table">
+    <div *ngIf="tableData.length > 0" class="results-table table-responsive mt-4">
         <app-result-table [tableData]="tableData" [columns]="columns"></app-result-table>
     </div>
 
-    <div *ngIf="graphData.length > 0" class="results-graph">
+    <div *ngIf="graphData.length > 0" class="results-graph mt-4">
         <app-graph-display [graphData]="graphData"></app-graph-display>
     </div>
 
-    <div *ngIf="!tableData.length && !graphData.length" class="results-empty">
-        <p>Nenhum dado disponível para exibição.</p>
+    <div *ngIf="!tableData.length && !graphData.length" class="results-empty alert alert-warning mt-4 text-center">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>Nenhum dado disponível para exibição.
     </div>
 </div>

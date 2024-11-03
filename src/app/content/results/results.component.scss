@@ -1,7 +1,63 @@
 .results-container {
-    padding: 1rem;
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-    margin-bottom: 1rem;
+    background-color: #f8f9fa; // Cor de fundo suave para destacar a área de resultados
+    border: 1px solid #e0e0e0; // Borda leve para separar do restante da página
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Sombra sutil para destacar o contêiner
+
+    .results-title {
+        color: #2c2c2c; // Cor principal para o título
+        font-weight: 600;
+    }
+
+    .results-summary {
+        font-size: 14px;
+        color: #6c757d; // Cor neutra para o resumo
+    }
+
+    .results-table {
+        margin-top: 20px;
+    }
+
+    .results-graph {
+        margin-top: 20px;
+    }
+
+    .results-empty {
+        font-size: 16px;
+        color: #856404; // Cor para mensagem de alerta
+        background-color: #fff3cd; // Fundo para mensagem de alerta
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Sombra leve para destacar
+    }
+
+    // Estilo responsivo para dispositivos menores
+    @media (max-width: 768px) {
+        padding: 15px;
+
+        .results-title {
+            font-size: 20px;
+        }
+
+        .results-summary {
+            font-size: 13px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        padding: 10px;
+
+        .results-title {
+            font-size: 18px;
+        }
+
+        .results-summary {
+            font-size: 12px;
+        }
+
+        .results-empty {
+            font-size: 14px;
+        }
+    }
 }

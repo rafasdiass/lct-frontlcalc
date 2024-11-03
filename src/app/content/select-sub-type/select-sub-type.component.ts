@@ -25,31 +25,35 @@ export class SelectSubTypeComponent implements OnChanges {
   }
 
   private loadSubTypes(): void {
-    if (this.selectedCategory === 'fundacao') {
-      this.subTypes = [
-        'Barrete',
-        'Bloco',
-        'Estaca',
-        'Estaca Hélice Contínua',
-        'Radier',
-        'Sapata Corrida',
-        'Sapata Rígida',
-        'Sapata',
-        'Tubulão Ar Comprimido',
-        'Tubulão Céu Aberto',
-        'Tubulão',
-      ];
-    } else if (this.selectedCategory === 'estrutura') {
-      this.subTypes = [
-        'Pilar',
-        'Viga',
-        'Laje',
-        'Arco',
-        'Treliça',
-        'Viga Contínua',
-        'Flecha',
-        'Detalhamento',
-      ];
+    if (this.selectedCategory) {
+      if (this.selectedCategory === 'fundacao') {
+        this.subTypes = [
+          'Barrete',
+          'Bloco',
+          'Estaca',
+          'Estaca Hélice Contínua',
+          'Radier',
+          'Sapata Corrida',
+          'Sapata Rígida',
+          'Sapata',
+          'Tubulão Ar Comprimido',
+          'Tubulão Céu Aberto',
+          'Tubulão',
+        ];
+      } else if (this.selectedCategory === 'estrutura') {
+        this.subTypes = [
+          'Pilar',
+          'Viga',
+          'Laje',
+          'Arco',
+          'Treliça',
+          'Viga Contínua',
+          'Flecha',
+          'Detalhamento',
+        ];
+      } else {
+        this.subTypes = [];
+      }
     } else {
       this.subTypes = [];
     }
