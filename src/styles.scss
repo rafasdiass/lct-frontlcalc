@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+/* Importação do Bootstrap */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+/* Importação do Bootstrap Icons */
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+/* Importação da fonte Roboto do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Definição da fonte padrão para o projeto */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: rgb(35, 35, 35);
+}

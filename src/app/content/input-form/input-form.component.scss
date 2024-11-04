@@ -1,5 +1,124 @@
-.input-form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+// Importando variáveis globais de cores
+$primary-bg: #2c2c2c; // Cor de fundo marrom escuro
+$primary-text: #ffffff; // Cor do texto branca para maior contraste
+$hover-bg: #d4a373; // Cor marrom claro para hover
+$hover-text: #2c2c2c; // Cor do texto escuro para contraste
+$box-shadow-color: rgba(0, 0, 0, 0.5); // Cor da sombra
+$border-color: #d4a373; // Cor da borda dourada
+$light-shadow: rgba(212, 163, 115, 0.4); // Sombra leve com o hover color
+$icon-color: #d4a373; // Cor dos ícones para contraste
+
+// Estilização para o formulário de entrada
+.container {
+    background-color: $primary-bg !important;
+    color: $primary-text;
+    border: 2px solid $border-color;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px $box-shadow-color;
+    padding: 20px;
+    margin-top: 40px;
+
+    h2 {
+        color: $primary-text; // Cor branca para contraste
+        font-weight: bold;
+    }
+
+    .form-label {
+        color: $primary-text; // Cor branca para contraste
+        font-size: 1.1rem;
+    }
+
+    .bi {
+        color: $icon-color; // Cor dos ícones para contraste
+    }
+
+    .app-select-calculation-type,
+    .app-select-sub-type,
+    .app-input-fields,
+    .app-submit-button,
+    .app-feedback,
+    .app-error-notification {
+        margin-bottom: 20px;
+
+        // Adiciona transições suaves para interação
+        transition: background-color 0.3s, color 0.3s;
+
+        &:hover {
+            background-color: $hover-bg;
+            color: $hover-text;
+        }
+    }
+
+    .text-center {
+        color: $primary-text; // Cor branca para contraste
+    }
+
+    .d-flex {
+        .app-submit-button {
+            background-color: $hover-bg;
+            color: $hover-text;
+            border: 1px solid $border-color;
+            padding: 10px 20px;
+            border-radius: 5px;
+
+            &:hover {
+                background-color: darken($hover-bg, 10%);
+                color: $primary-text; // Cor branca para manter contraste
+                box-shadow: 0 2px 10px $box-shadow-color;
+            }
+        }
+    }
+
+    .app-feedback {
+        border: 1px solid $hover-bg;
+        padding: 15px;
+        background-color: rgba(212, 163, 115, 0.1); // Fundo levemente transparente para contraste
+        border-radius: 5px;
+        color: $primary-text; // Cor branca para contraste
+
+        &.success {
+            border-color: lighten($hover-bg, 10%);
+        }
+
+        &.error {
+            border-color: #d9534f; // Vermelho para erros
+        }
+    }
+
+    .app-error-notification {
+        color: #d9534f; // Vermelho para mensagem de erro
+        background-color: rgba(217, 83, 79, 0.1); // Fundo vermelho claro para contraste
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #d9534f;
+    }
+}
+
+// Adaptação para responsividade
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .form-label {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+
+    .form-label {
+        font-size: 0.9rem;
+    }
 }

@@ -1,10 +1,22 @@
+// Importando variáveis globais de cores com ajuste de contraste
+$primary-bg: #2c2c2c; // Cor de fundo marrom escuro
+$primary-text: #ffffff; // Cor do texto branca para melhor contraste
+$input-bg: #f5f5f5; // Cor de fundo dos inputs
+$input-border: #d4a373; // Tom marrom claro para borda
+$placeholder-color: #b8a99d; // Tom bege acinzentado
+$icon-bg: #3b3b3b; // Fundo do ícone mais escuro para destaque
+$icon-color: #d4a373; // Cor do ícone para contraste
+$focus-shadow-color: rgba(212, 163, 115, 0.5); // Cor do foco
+$hover-bg: #d4a373; // Cor marrom claro para hover
+$hover-text: #2c2c2c; // Cor do texto no hover
+
 .input-group {
     margin-bottom: 1rem;
 
     .input-group-prepend {
         .input-group-text {
-            background-color: #2c2c2c; // Tom marrom escuro/preto
-            color: #e0d5c2; // Tom bege claro
+            background-color: $icon-bg; // Fundo mais escuro para contraste
+            color: $icon-color; // Tom marrom claro
             border: none;
             border-radius: 5px 0 0 5px;
             display: flex;
@@ -12,22 +24,35 @@
         }
     }
 
-    input.form-control {
-        border: 1px solid #e0d5c2; // Tom bege claro para a borda
+    input.form-control,
+    select.form-control {
+        border: 1px solid $input-border; // Tom marrom claro para a borda
         border-radius: 0 5px 5px 0;
-        background-color: #f5f5f5; // Tom neutro claro
-        color: #2c2c2c; // Texto marrom escuro
+        background-color: $input-bg; // Tom neutro claro
+        color: $primary-bg; // Texto marrom escuro para visibilidade
         padding: 10px;
+        font-size: 16px;
 
         &:focus {
-            border-color: #d4a373; // Tom marrom claro
-            box-shadow: 0 0 5px rgba(212, 163, 115, 0.5);
+            border-color: $hover-bg; // Tom marrom claro
+            box-shadow: 0 0 5px $focus-shadow-color;
+            outline: none;
         }
 
         &::placeholder {
-            color: #a89984; // Tom bege acinzentado para placeholder
+            color: $placeholder-color; // Tom bege acinzentado para placeholder
             opacity: 0.8;
         }
+    }
+
+    select.form-control {
+        appearance: none;
+        background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23d4a373" class="bi bi-chevron-down" viewBox="0 0 16 16"%3E%3Cpath fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/%3E%3C/svg%3E');
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 16px;
+        padding-right: 30px;
+        color: $primary-bg; // Cor do texto para contraste
     }
 }
 
@@ -36,13 +61,15 @@
     .input-group {
         margin-bottom: 0.75rem;
 
-        input.form-control {
+        input.form-control,
+        select.form-control {
             padding: 8px;
             font-size: 14px;
         }
 
         .input-group-prepend .input-group-text {
             padding: 5px;
+            font-size: 14px;
         }
     }
 }
@@ -51,13 +78,14 @@
     .input-group {
         margin-bottom: 0.5rem;
 
-        input.form-control {
+        input.form-control,
+        select.form-control {
             padding: 6px;
             font-size: 12px;
         }
 
         .input-group-prepend .input-group-text {
-            font-size: 14px;
+            font-size: 12px;
         }
     }
 }

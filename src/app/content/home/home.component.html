@@ -2,11 +2,16 @@
   <div class="header-container">
     <app-header></app-header> <!-- Componente de cabeçalho -->
   </div>
-  <div class="content-wrapper d-flex flex-grow-1">
-    <div class="sidebar-container">
+  <div class="content-wrapper d-flex flex-grow-1 position-relative">
+    <!-- Botão de menu visível apenas em telas menores -->
+    <button class="d-md-none navbar-toggler" type="button" (click)="toggleSidebar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- Sidebar visível em telas menores com posição fixa -->
+    <div [ngClass]="{ 'd-none': !isSidebarVisible, 'd-md-block': true }" class="sidebar-container">
       <app-sidebar></app-sidebar> <!-- Componente de sidebar -->
     </div>
-    <div class="main-content-container flex-grow-1 p-4">
+    <div class="main-content-container flex-grow-1 d-flex align-items-center justify-content-center p-3">
       <router-outlet></router-outlet> <!-- Conteúdo principal das rotas -->
     </div>
   </div>

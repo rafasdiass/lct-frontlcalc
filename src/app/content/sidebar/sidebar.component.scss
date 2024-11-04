@@ -1,84 +1,62 @@
+// Variáveis globais de cores para o projeto
 $primary-bg: #2c2c2c; // Cor de fundo marrom escuro
 $primary-text: #e0d5c2; // Cor do texto bege claro
 $hover-bg: #d4a373; // Cor marrom claro para hover
 $hover-text: #2c2c2c; // Cor do texto escuro para contraste
 $box-shadow-color: rgba(0, 0, 0, 0.5); // Cor da sombra
+$border-color: #d4a373; // Cor da borda dourada
+$light-shadow: rgba(212, 163, 115, 0.4); // Sombra leve com o hover color
 
 .sidebar-container {
     background-color: $primary-bg;
     color: $primary-text;
-    width: 250px;
     padding: 20px;
-    box-shadow: 2px 0 10px $box-shadow-color; // Sombra para destacar a sidebar
-    position: relative; // Relativo para respeitar a posição no componente pai
-    overflow-y: auto; // Adiciona rolagem se necessário
-    flex-shrink: 0;
-    height: 100%; // Garante que a altura ocupe 100% do container pai (content-wrapper)
-
-    .nav-item {
-        margin-bottom: 15px;
-        transition: all 0.3s ease;
-    }
+    border-right: 3px solid $border-color;
+    box-shadow: 2px 0 10px $box-shadow-color;
+    position: relative;
+    height: 100%;
+    overflow-y: auto;
 
     .nav-link {
         color: $primary-text;
-        font-size: 16px;
-        padding: 12px;
-        border-radius: 8px;
+        padding: 10px;
+        border-radius: 5px;
+        text-decoration: none;
         display: flex;
         align-items: center;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        background: transparent;
-
-        i {
-            margin-right: 10px;
-            font-size: 18px; // Tamanho do ícone
-        }
+        transition: all 0.3s;
 
         &:hover {
             background-color: $hover-bg;
             color: $hover-text;
-            box-shadow: 0 4px 8px $box-shadow-color; // Sombra ao passar o mouse
+            box-shadow: 0 4px 8px $light-shadow;
+        }
+
+        &.active {
+            background-color: $hover-bg;
+            color: $hover-text;
+            border-color: $border-color;
         }
     }
 
-    .nav-link.active {
-        background-color: $hover-bg;
-        color: $hover-text;
-        box-shadow: 0 4px 8px $box-shadow-color;
-    }
-}
+    .navbar-toggler {
+        border: none;
+        background: transparent;
+        color: $primary-text;
+        font-size: 24px;
 
-// Responsividade - Mobile First
-@media (max-width: 768px) {
-    .sidebar-container {
-        width: 200px;
-        padding: 15px;
+        &:focus {
+            outline: none;
+        }
     }
 
-    .nav-link {
-        font-size: 14px;
-        padding: 10px;
-    }
+    @media (max-width: 768px) {
+        .collapse {
+            display: none;
+        }
 
-    i {
-        font-size: 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    .sidebar-container {
-        width: 150px;
-        padding: 10px;
-    }
-
-    .nav-link {
-        font-size: 12px;
-        padding: 8px;
-    }
-
-    i {
-        font-size: 14px;
+        .collapse.show {
+            display: block;
+        }
     }
 }

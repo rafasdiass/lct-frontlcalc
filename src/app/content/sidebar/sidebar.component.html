@@ -1,12 +1,17 @@
 <nav class="sidebar-container">
-    <ul class="nav flex-column">
-        <li *ngFor="let item of navItems" class="nav-item">
-            <a [routerLink]="item.route" class="nav-link">
-                <i class="bi bi-house-door-fill" *ngIf="item.id === 'home'"></i>
-                <i class="bi bi-calculator-fill" *ngIf="item.id === 'input-form'"></i>
-                <i class="bi bi-clock-history" *ngIf="item.id === 'history'"></i>
-                {{ item.label }}
-            </a>
-        </li>
-    </ul>
+    <button class="navbar-toggler d-md-none" type="button" (click)="toggleNavbar()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div [ngClass]="{ 'collapse': !isNavbarOpen, 'd-md-block': true }">
+        <ul class="nav flex-column">
+            <li *ngFor="let item of navItems" class="nav-item">
+                <a (click)="navigate(item.route)" class="nav-link">
+                    <i class="bi bi-house-door-fill" *ngIf="item.id === 'home'"></i>
+                    <i class="bi bi-calculator-fill" *ngIf="item.id === 'input-form'"></i>
+                    <i class="bi bi-clock-history" *ngIf="item.id === 'history'"></i>
+                    {{ item.label }}
+                </a>
+            </li>
+        </ul>
+    </div>
 </nav>

@@ -1,19 +1,32 @@
 import { Component } from '@angular/core';
-import { InputFormComponent } from "../input-form/input-form.component";
-import { ResultsComponent } from "../results/results.component";
-import { FeedbackComponent } from "../feedback/feedback.component";
-import { FooterComponent } from "../footer/footer.component";
-import { SidebarComponent } from "../sidebar/sidebar.component";
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { FooterComponent } from '../footer/footer.component';
+import { HeaderComponent } from '../header/header.component';
+import { NavbarService } from '../../shared/services/navbar.service';
+import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from "../header/header.component";
 
 @Component({
   selector: 'app-home',
-  standalone: true,
-  imports: [InputFormComponent, ResultsComponent, FeedbackComponent, FooterComponent, SidebarComponent, RouterOutlet, HeaderComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrls: ['./home.component.scss'],
+  imports: [
+    SidebarComponent,
+    FooterComponent,
+    HeaderComponent,
+    CommonModule,
+    RouterOutlet,
+  ],
+  standalone: true,
 })
 export class HomeComponent {
+  constructor(private navbarService: NavbarService) {}
 
+  get isSidebarVisible(): boolean {
+    return this.navbarService.isNavbarOpen; // Obtenha o estado de visibilidade do sidebar
+  }
+
+  toggleSidebar(): void {
+    this.navbarService.toggleNavbar(); // Alterna a visibilidade do sidebar
+  }
 }
