@@ -39,15 +39,22 @@
             "prerender": true,
             "ssr": {
               "entry": "server.ts"
-            }
+            },
+            "allowedCommonJsDependencies": [
+              "core-js",
+              "canvg",
+              "raf",
+              "rgbcolor",
+              "jspdf"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "1.5MB",
+                  "maximumError": "2MB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -55,12 +62,16 @@
                   "maximumError": "4kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "optimization": true,
+              "sourceMap": false,
+              "extractLicenses": true
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "outputHashing": "none"
             }
           },
           "defaultConfiguration": "production"
