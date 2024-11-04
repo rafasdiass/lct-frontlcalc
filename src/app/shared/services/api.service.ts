@@ -33,12 +33,13 @@ import {
   FundacaoInput,
   FundacaoResult,
 } from '../models/calculation-interface.model'; // Assumindo que você tem um arquivo models.ts com as interfaces
+import { environment } from '../../../environment/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  private readonly baseUrl: string = 'http://localhost:8000'; // Ajuste conforme a configuração do seu backend
+  private readonly baseUrl: string = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
