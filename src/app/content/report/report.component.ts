@@ -1,20 +1,32 @@
+// report.component.ts
+
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../shared/api.service';
+import { CalculationResultService } from '../../shared/services/calculation-result.service';
 import { CalculationResult } from '../../shared/models/calculation-data.model';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
+import { CommonModule } from '@angular/common';
+
+// Módulo de declaração para estender a interface jsPDF e incluir lastAutoTable
+declare module 'jspdf' {
+  interface jsPDF {
+    lastAutoTable?: { finalY: number };
+  }
+}
 
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.scss'],
+  standalone: true,
+  imports: [CommonModule],
 })
 export class ReportComponent implements OnInit {
   reportData: Array<{ parameter: string; value: string | number }> = [];
   reportConclusion: string = '';
   currentDate: string = '';
 
-  constructor(private apiService: ApiService) {}
+  constructor(private calculationResultService: CalculationResultService) {}
 
   ngOnInit(): void {
     this.currentDate = new Date().toLocaleString('pt-BR', {
@@ -29,19 +41,19 @@ export class ReportComponent implements OnInit {
   }
 
   private loadReportData(): void {
-    this.apiService.getCalculationResults().subscribe(
-      (data: CalculationResult) => {
-        this.reportData = this.transformDataToTableFormat(data);
-        if (typeof data.Conclusão === 'string') {
-          this.reportConclusion = data.Conclusão;
-        } else {
-          this.reportConclusion = 'Resultados dentro dos limites aceitáveis.';
-        }
-      },
-      (error) => {
-        console.error('Erro ao carregar os dados do relatório:', error);
+    const data = this.calculationResultService.getResult();
+
+    if (data) {
+      this.reportData = this.transformDataToTableFormat(data);
+      if (typeof data.conclusao === 'string') {
+        this.reportConclusion = data.conclusao;
+      } else {
+        this.reportConclusion = 'Resultados dentro dos limites aceitáveis.';
       }
-    );
+    } else {
+      console.error('Nenhum resultado de cálculo disponível.');
+      // Você pode redirecionar o usuário ou exibir uma mensagem apropriada
+    }
   }
 
   private transformDataToTableFormat(
@@ -49,18 +61,22 @@ export class ReportComponent implements OnInit {
   ): Array<{ parameter: string; value: string | number }> {
     const formattedData: Array<{ parameter: string; value: string | number }> =
       [];
+
     for (const [key, value] of Object.entries(data)) {
-      if (typeof value !== 'object' || value === null) {
-        formattedData.push({ parameter: key, value: String(value) });
-      } else {
-        for (const [subKey, subValue] of Object.entries(value)) {
-          formattedData.push({
-            parameter: `${key} - ${subKey}`,
-            value: String(subValue),
-          });
+      if (key !== 'conclusao') {
+        if (typeof value !== 'object' || value === null) {
+          formattedData.push({ parameter: key, value: String(value) });
+        } else {
+          for (const [subKey, subValue] of Object.entries(value)) {
+            formattedData.push({
+              parameter: `${key} - ${subKey}`,
+              value: String(subValue),
+            });
+          }
         }
       }
     }
+
     return formattedData;
   }
 
@@ -82,7 +98,8 @@ export class ReportComponent implements OnInit {
       item.value,
     ]);
 
-    (doc as any).autoTable({
+    // Uso do autoTable sem 'any'
+    autoTable(doc, {
       startY: 45,
       head: [['Parâmetro', 'Valor']],
       body: tableBody,
@@ -92,10 +109,11 @@ export class ReportComponent implements OnInit {
     });
 
     // Adicionar a conclusão na página
-    let finalY = (doc as any).lastAutoTable.finalY + 10;
-    doc.text('Conclusão:', 14, finalY);
+    const finalY = doc.lastAutoTable ? doc.lastAutoTable.finalY : 45;
+    const nextY = finalY + 10;
+    doc.text('Conclusão:', 14, nextY);
     doc.setFontSize(10);
-    doc.text(this.reportConclusion, 14, finalY + 5);
+    doc.text(this.reportConclusion, 14, nextY + 5);
 
     // Salvar o PDF
     doc.save(`relatorio_calculo_${new Date().toISOString().slice(0, 10)}.pdf`);

@@ -1,7 +1,8 @@
-<table *ngIf="hasTableData()" class="result-table">
+<!-- result-table.component.html -->
+<table *ngIf="hasTableData()" class="result-table table table-bordered">
     <thead>
         <tr>
-            <th *ngFor="let column of columns">{{ column }}</th>
+            <th *ngFor="let column of columns">{{ column | titlecase }}</th>
         </tr>
     </thead>
     <tbody>
@@ -10,4 +11,7 @@
         </tr>
     </tbody>
 </table>
-<p *ngIf="!hasTableData()">Nenhum dado disponível para exibir na tabela.</p>
+
+<p *ngIf="!hasTableData()" class="text-center mt-3">
+    <i class="bi bi-info-circle-fill me-2"></i>Nenhum dado disponível para exibir na tabela.
+</p>

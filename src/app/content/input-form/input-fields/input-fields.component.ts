@@ -1,3 +1,5 @@
+// input-fields.component.ts
+
 import {
   Component,
   Input,
@@ -8,6 +10,11 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '../../../shared/services/api.service';
+import {
+  Material,
+  Solo,
+} from '../../../shared/models/calculation-interface.model';
 
 @Component({
   selector: 'app-input-fields',
@@ -26,10 +33,17 @@ export class InputFieldsComponent implements OnChanges {
   fields: string[] = [];
   fieldValues: { [key: string]: string | number } = {};
 
+  // Adicionando materiais e solos disponíveis
+  materiaisDisponiveis: Material[] = [];
+  solosDisponiveis: Solo[] = [];
+
+  constructor(private apiService: ApiService) {}
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedType'] || changes['selectedSubType']) {
       this.fields = this.getFields();
       this.initializeFieldValues();
+      this.loadOptions(); // Carregar opções de materiais e solos
     }
   }
 
@@ -98,5 +112,31 @@ export class InputFieldsComponent implements OnChanges {
     this.fields.forEach((field) => {
       this.fieldValues[field] = '';
     });
+  }
+
+  private loadOptions(): void {
+    // Se o cálculo envolve materiais, carregue-os
+    if (this.fields.includes('Material')) {
+      this.apiService.getMateriaisDisponiveis().subscribe(
+        (data) => {
+          this.materiaisDisponiveis = data.materiais;
+        },
+        (error: any) => {
+          console.error('Erro ao obter materiais disponíveis:', error);
+        }
+      );
+    }
+
+    // Se o cálculo envolve solos, carregue-os
+    if (this.fields.includes('Tipo de Solo')) {
+      this.apiService.getSolosDisponiveis().subscribe(
+        (data) => {
+          this.solosDisponiveis = data.solos;
+        },
+        (error: any) => {
+          console.error('Erro ao obter solos disponíveis:', error);
+        }
+      );
+    }
   }
 }

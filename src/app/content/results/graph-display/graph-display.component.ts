@@ -1,8 +1,10 @@
+// graph-display.component.ts
+
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Interface para a estrutura de dados do gráfico
-interface GraphDataPoint {
+export interface GraphDataPoint {
   label: string; // Rótulo do eixo X
   value: number; // Valor associado ao rótulo
 }
@@ -15,7 +17,7 @@ interface GraphDataPoint {
   styleUrls: ['./graph-display.component.scss'],
 })
 export class GraphDisplayComponent {
-  @Input() graphData: GraphDataPoint[] = []; // Uso da interface tipada
+  @Input() graphData: GraphDataPoint[] = [];
 
   hasGraphData(): boolean {
     return this.graphData.length > 0;

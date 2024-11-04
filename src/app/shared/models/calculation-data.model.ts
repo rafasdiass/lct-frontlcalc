@@ -12,11 +12,10 @@ export interface CalculationResult {
   summary: string;
   tableData: Array<{ [key: string]: string | number }>;
   columns: string[];
-  graphData: Array<{ label: string; value: number }>;
-  Conclusão?: string; // Propriedade opcional adicionada
+  graphData: GraphDataPoint[];
+  conclusao?: string; // Propriedade opcional adicionada
   [key: string]: unknown; // Para propriedades dinâmicas
 }
-
 
 // Interface para definir uma linha de dados da tabela
 export interface TableRow {
