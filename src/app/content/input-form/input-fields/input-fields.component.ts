@@ -1,5 +1,3 @@
-// input-fields.component.ts
-
 import {
   Component,
   Input,
@@ -36,6 +34,9 @@ export class InputFieldsComponent implements OnChanges {
   // Adicionando materiais e solos disponíveis
   materiaisDisponiveis: Material[] = [];
   solosDisponiveis: Solo[] = [];
+
+  // Definindo quais campos são dropdowns
+  dropdownFields: string[] = ['Tipo de Solo', 'Material'];
 
   constructor(private apiService: ApiService) {}
 
@@ -101,6 +102,14 @@ export class InputFieldsComponent implements OnChanges {
 
   onFieldChange(fieldName: string, event: Event): void {
     const target = event.target as HTMLInputElement;
+    if (target && target.value !== null) {
+      this.fieldValues[fieldName] = target.value;
+      this.fieldValuesChanged.emit(this.fieldValues);
+    }
+  }
+
+  onSelectChange(fieldName: string, event: Event): void {
+    const target = event.target as HTMLSelectElement;
     if (target && target.value !== null) {
       this.fieldValues[fieldName] = target.value;
       this.fieldValuesChanged.emit(this.fieldValues);

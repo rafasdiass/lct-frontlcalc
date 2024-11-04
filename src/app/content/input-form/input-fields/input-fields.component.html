@@ -4,7 +4,33 @@
             <i class="bi bi-pencil-fill"></i>
         </span>
     </div>
+<!-- Campo Dropdown para "Tipo de Solo" -->
+<ng-container *ngIf="field === 'Tipo de Solo' && solosDisponiveis">
     <label [for]="field" class="form-label visually-hidden">{{ field }}</label>
-    <input [id]="field" [name]="field" type="text" class="form-control" (input)="onFieldChange(field, $event)"
-        [placeholder]="field" />
+    <select [id]="field" [name]="field" class="form-control" (change)="onSelectChange(field, $event)" required>
+        <option value="" disabled selected>Selecione o Tipo de Solo</option>
+        <option *ngFor="let solo of solosDisponiveis" [value]="solo.codigo">
+            {{ solo.nome }}
+        </option>
+    </select>
+</ng-container>
+
+<!-- Campo Dropdown para "Material" -->
+<ng-container *ngIf="field === 'Material' && materiaisDisponiveis">
+    <label [for]="field" class="form-label visually-hidden">{{ field }}</label>
+    <select [id]="field" [name]="field" class="form-control" (change)="onSelectChange(field, $event)" required>
+        <option value="" disabled selected>Selecione o Material</option>
+        <option *ngFor="let material of materiaisDisponiveis" [value]="material.codigo">
+            {{ material.nome }}
+        </option>
+    </select>
+</ng-container>
+
+
+    <!-- Campo de Entrada de Texto para Outros Campos -->
+    <ng-container *ngIf="!dropdownFields.includes(field)">
+        <label [for]="field" class="form-label visually-hidden">{{ field }}</label>
+        <input [id]="field" [name]="field" type="text" class="form-control" (input)="onFieldChange(field, $event)"
+            [placeholder]="field" required />
+    </ng-container>
 </div>
