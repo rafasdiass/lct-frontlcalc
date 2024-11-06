@@ -4,23 +4,14 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   PilarInput,
-  PilarResult,
   VigaInput,
-  VigaResult,
   LajeInput,
-  LajeResult,
   ArcoInput,
-  ArcoResult,
   TrelicaInput,
-  TrelicaResult,
   VigaContinuaInput,
-  VigaContinuaResult,
   FlechaInput,
-  FlechaResult,
   DetalhamentoInput,
-  DetalhamentoResult,
   FundacaoInput,
-  FundacaoResult,
 } from '../../../shared/models/calculation-interface.model';
 import { ApiService } from '../../../shared/services/api.service';
 import { Router } from '@angular/router';
@@ -148,7 +139,6 @@ export class SubmitButtonComponent {
           const detalhamentoData: DetalhamentoInput = {
             elemento: String(this.calculationData['elemento']),
             material: String(this.calculationData['material']),
-            // Outros parâmetros específicos
           };
           calculationObservable =
             this.apiService.calcularDetalhamento(detalhamentoData);
@@ -159,7 +149,6 @@ export class SubmitButtonComponent {
             carga: Number(this.calculationData['carga']),
             profundidade: Number(this.calculationData['profundidade']),
             solo: String(this.calculationData['solo']),
-            // Outros parâmetros específicos
           };
           calculationObservable =
             this.apiService.calcularFundacao(fundacaoData);
